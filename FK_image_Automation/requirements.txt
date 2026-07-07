@@ -1,7 +1,0 @@
-flask
-openpyxl
-pandas
-requests
-playwright
-python-multipart
-flask xlsxwriter pillow
