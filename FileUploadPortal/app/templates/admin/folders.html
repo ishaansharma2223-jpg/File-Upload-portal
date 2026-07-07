@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block title %}Destination Folder Management - FileUploadPortal{% endblock %}
+
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-folder-fill"></i> Destination Folder Management</h2>
+
+<p class="text-muted">
+    For each Platform + Company combination, configure the four physical
+    destination folders that uploaded files are routed into, depending on
+    the upload type the user selects. Paths can be absolute (e.g.
+    <code>C:\Uploads\Acme\Active</code> or <code>/data/uploads/acme/active</code>)
+    or relative to where the Flask app is running. The folder will be
+    created automatically the first time a file is uploaded into it.
+</p>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white">
+                <i class="bi bi-plus-circle"></i> Add / Update Folder Configuration
+            </div>
+            <div class="card-body">
+                {% if not platforms or not companies %}
+                    <div class="alert alert-warning mb-0">
+                        Please create at least one <a href="{{ url_for('admin.platforms') }}">platform</a>
+                        and one <a href="{{ url_for('admin.companies') }}">company</a> before configuring folders.
+                    </div>
+                {% else %}
+                <form method="POST" action="{{ url_for('admin.folders') }}">
+                    <div class="mb-3">
+                        <label class="form-label">Platform</label>
+                        <select name="platform_id" class="form-select" required>
+                            <option value="" disabled selected>Select platform</option>
+                            {% for platform in platforms %}
+                                <option value="{{ platform.id }}">{{ platform.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Company</label>
+                        <select name="company_id" class="form-select" required>
+                            <option value="" disabled selected>Select company</option>
+                            {% for company in companies %}
+                                <option value="{{ company.id }}">{{ company.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-success"><i class="bi bi-check-circle"></i> Active Path</label>
+                        <input type="text" name="active_path" class="form-control" placeholder="/data/uploads/active" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-danger"><i class="bi bi-slash-circle"></i> Block Path</label>
+                        <input type="text" name="block_path" class="form-control" placeholder="/data/uploads/block" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary"><i class="bi bi-pause-circle"></i> Inactive Path</label>
+                        <input type="text" name="inactive_path" class="form-control" placeholder="/data/uploads/inactive" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-info"><i class="bi bi-archive"></i> Archive Path</label>
+                        <input type="text" name="archive_path" class="form-control" placeholder="/data/uploads/archive" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-save"></i> Save Folder Configuration
+                    </button>
+                    <small class="text-muted d-block mt-2">
+                        If a configuration already exists for the chosen platform/company pair, it will be updated.
+                    </small>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white">Configured Folders</div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Platform</th>
+                            <th>Company</th>
+                            <th>Active</th>
+                            <th>Block</th>
+                            <th>Inactive</th>
+                            <th>Archive</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for folder in folders %}
+                        <tr>
+                            <td>{{ folder.platform.name }}</td>
+                            <td>{{ folder.company.name }}</td>
+                            <td><small class="text-muted">{{ folder.active_path }}</small></td>
+                            <td><small class="text-muted">{{ folder.block_path }}</small></td>
+                            <td><small class="text-muted">{{ folder.inactive_path }}</small></td>
+                            <td><small class="text-muted">{{ folder.archive_path }}</small></td>
+                            <td class="text-end">
+                                <a href="{{ url_for('admin.delete_folder', folder_id=folder.id) }}"
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Delete this folder configuration?');">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="7" class="text-center text-muted py-4">No folder configurations yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

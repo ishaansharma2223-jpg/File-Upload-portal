@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}User Management - FileUploadPortal{% endblock %}
+
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-people-fill"></i> User Management</h2>
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white"><i class="bi bi-person-plus-fill"></i> Add New User</div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin.users') }}">
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Company Access</label>
+                        <select name="restricted_company_id" class="form-select">
+                            <option value="">All Companies (default)</option>
+                            {% for company in companies %}
+                                <option value="{{ company.id }}">Only: {{ company.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <small class="text-muted">
+                            Leave as "All Companies" unless this user should be
+                            locked to a single company.
+                        </small>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-plus-circle"></i> Create User
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white">All Users</div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Status</th>
+                            <th>Company Access</th>
+                            <th>Created</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>
+                                {% if user.is_active %}
+                                    <span class="badge text-bg-success">Active</span>
+                                {% else %}
+                                    <span class="badge text-bg-secondary">Inactive</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form method="POST"
+                                      action="{{ url_for('admin.set_company_access', user_id=user.id) }}"
+                                      class="d-flex gap-1">
+                                    <select name="restricted_company_id" class="form-select form-select-sm">
+                                        <option value="" {% if not user.restricted_company_id %}selected{% endif %}>
+                                            All Companies
+                                        </option>
+                                        {% for company in companies %}
+                                            <option value="{{ company.id }}"
+                                                {% if user.restricted_company_id == company.id %}selected{% endif %}>
+                                                Only: {{ company.name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-check2"></i>
+                                    </button>
+                                </form>
+                            </td>
+                            <td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+                            <td class="text-end">
+                                <a href="{{ url_for('admin.toggle_user', user_id=user.id) }}"
+                                   class="btn btn-sm btn-outline-warning">
+                                    {% if user.is_active %}Deactivate{% else %}Activate{% endif %}
+                                </a>
+                                <a href="{{ url_for('admin.delete_user', user_id=user.id) }}"
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Delete user {{ user.username }}? This cannot be undone.');">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="6" class="text-center text-muted py-4">No users created yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

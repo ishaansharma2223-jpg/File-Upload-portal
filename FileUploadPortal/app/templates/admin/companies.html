@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Company Management - FileUploadPortal{% endblock %}
+
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-building-fill"></i> Company Management</h2>
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white"><i class="bi bi-plus-circle"></i> Add New Company</div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin.companies') }}">
+                    <div class="mb-3">
+                        <label class="form-label">Company Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="e.g. Acme Corp" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-plus-circle"></i> Add Company
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white">All Companies</div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Created</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for company in companies %}
+                        <tr>
+                            <td>{{ company.id }}</td>
+                            <td>{{ company.name }}</td>
+                            <td>{{ company.created_at.strftime('%Y-%m-%d') }}</td>
+                            <td class="text-end">
+                                <a href="{{ url_for('admin.delete_company', company_id=company.id) }}"
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Delete company {{ company.name }}? Related folder configurations will also be removed.');">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="4" class="text-center text-muted py-4">No companies added yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

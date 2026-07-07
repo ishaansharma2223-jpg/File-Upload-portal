@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Upload File - FileUploadPortal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+
+        <div class="mb-4">
+            <div class="progress" style="height: 6px;">
+                <div class="progress-bar bg-primary" style="width: 100%;"></div>
+            </div>
+            <p class="text-muted small mt-1 mb-0">Step 3 of 3: Upload File</p>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-5">
+                <h3 class="mb-1"><i class="bi bi-cloud-arrow-up-fill text-primary"></i> Upload File</h3>
+                <p class="text-muted mb-4">
+                    Platform: <span class="badge text-bg-primary">{{ session.get('selected_platform_name') }}</span>
+                    &nbsp;Company: <span class="badge text-bg-secondary">{{ session.get('selected_company_name') }}</span>
+                    &nbsp;<a href="{{ url_for('user.change_selection') }}" class="small">Change selection</a>
+                </p>
+
+                {% if not folder_config %}
+                    <div class="alert alert-warning">
+                        No destination folders have been configured for this platform/company
+                        combination yet. Please contact your administrator before uploading.
+                    </div>
+                {% else %}
+                <form method="POST" action="{{ url_for('user.upload') }}" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Upload Type</label>
+                        <select name="upload_type" class="form-select form-select-lg" required>
+                            <option value="" disabled selected>-- Choose upload type --</option>
+                            {% for upload_type in upload_types %}
+                                <option value="{{ upload_type }}">{{ upload_type }}</option>
+                            {% endfor %}
+                        </select>
+                        <small class="text-muted">
+                            This determines which admin-configured destination folder your file
+                            will be saved to.
+                        </small>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Source File</label>
+                        <input type="file" name="source_file" class="form-control form-control-lg" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 btn-lg">
+                        <i class="bi bi-upload"></i> Upload File
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

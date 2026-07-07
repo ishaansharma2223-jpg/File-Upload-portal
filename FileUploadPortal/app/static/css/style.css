@@ -1,0 +1,39 @@
+/*
+  style.css
+  ---------
+  Small set of custom touches layered on top of Bootstrap 5.
+  Kept minimal and unobtrusive on purpose: Bootstrap already provides
+  a clean, consistent design system for this project.
+*/
+
+body {
+    background-color: #f4f6f9;
+}
+
+main.container {
+    min-height: 70vh;
+}
+
+.card {
+    border-radius: 0.75rem;
+}
+
+.navbar-brand {
+    letter-spacing: 0.3px;
+}
+
+footer {
+    border-top: 1px solid #e3e6ea;
+    background-color: #ffffff;
+}
+
+/* Slightly larger touch targets on form selects/inputs for upload screens */
+.form-select-lg,
+.form-control-lg {
+    border-radius: 0.5rem;
+}
+
+table code,
+table small {
+    word-break: break-all;
+}

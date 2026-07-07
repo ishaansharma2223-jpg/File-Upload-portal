@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Select Platform - FileUploadPortal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+
+        <div class="mb-4">
+            <div class="progress" style="height: 6px;">
+                <div class="progress-bar bg-primary" style="width: 33%;"></div>
+            </div>
+            <p class="text-muted small mt-1 mb-0">Step 1 of 3: Select Platform</p>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-5">
+                <h3 class="mb-4"><i class="bi bi-hdd-stack-fill text-primary"></i> Select a Platform</h3>
+
+                {% if not platforms %}
+                    <div class="alert alert-warning mb-0">
+                        No platforms have been configured yet. Please contact your administrator.
+                    </div>
+                {% else %}
+                <form method="POST" action="{{ url_for('user.select_platform') }}">
+                    <div class="mb-4">
+                        <select name="platform_id" class="form-select form-select-lg" required>
+                            <option value="" disabled selected>-- Choose a platform --</option>
+                            {% for platform in platforms %}
+                                <option value="{{ platform.id }}">{{ platform.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 btn-lg">
+                        Continue <i class="bi bi-arrow-right"></i>
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
