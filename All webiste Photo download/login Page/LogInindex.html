@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Login</title>
+    
+    <!-- Google Fonts: Inter for modern, clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS File -->
+    <link rel="stylesheet" href="LogInstyle.css">
+</head>
+<body>
+    
+    <!-- Main Login Container -->
+    <div class="login-wrapper">
+        
+        <!-- Login Card -->
+        <div class="login-card">
+            
+            <!-- Decorative Glow Effect -->
+            <div class="glow-effect"></div>
+            
+            <!-- Shield Icon with Crown -->
+            <div class="logo-container">
+                <div class="shield-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+            </div>
+            
+            <!-- Heading Section -->
+            <div class="heading-section">
+                <h1>Welcome Back!</h1>
+                <p class="subtitle">Sign in to your account</p>
+            </div>
+            
+            <!-- Login Form -->
+            <form class="login-form" id="loginForm">
+                
+                <!-- Email Input Field -->
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="Enter your email address" 
+                            required
+                        >
+                    </div>
+                </div>
+                
+                <!-- Password Input Field -->
+                <div class="input-group">
+                    <div class="label-row">
+                        <label for="password">Password</label>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Enter your password" 
+                            required
+                        >
+                        <button type="button" class="toggle-password">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Remember Me Checkbox -->
+                <div class="checkbox-group">
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox" id="remember" name="remember">
+                        <span class="checkmark"></span>
+                        <span class="checkbox-label">Remember me</span>
+                    </label>
+                </div>
+                
+                <!-- Sign In Button -->
+                <button type="submit" class="btn-signin">
+                    Sign In
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                
+            </form>
+            
+            
+        </div>
+
+        
+    </div>
+    
+    <!-- JavaScript File -->
+    <script src="LogInscript.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+/*=========================================
+   MARKETPLACE CARDS (FIXED IMAGE SIZING)
+========================================= */
+
+.marketplace-grid {
+display: flex;
+gap: 40px; /* Cards ke beech mein gap */
+flex-wrap: wrap; /* Mobile pe neeche shift ho jaye */
+justify-content: center;
+}
+
+/* 1. Increase Logo Size for ALL cards */
+.card .logo-box img {
+    width: 270px !important;
+    height: 100px !important;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+}
+/* Logo Box Colors */
+.logo-box {
+    width: 100%;
+    height: 100px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.purple-bg { background:linear-gradient(135deg,#761bf2,#2f1cda) }
+.blue-bg { background: linear-gradient(135deg, #1652f0, #4a90e2); }
+.black-bg { background: linear-gradient(135deg, #222, #444); }
+.pink-bg { background: linear-gradient(135deg, #ff007f, #ff5e99); }
+
+/* 2. Make ALL cards larger */
+.card {
+    width: 270px !important; /* Increased from 220px */
+    padding: 2px !important;
+}
+
+/* Individual Card Styling */
+.card {
+    background: white;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    padding: 20px;
+    width: 220px;
+    height: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 3. Headings (H3) for ALL cards */
+.card h3 {
+    font-size: 22px !important;
+    margin-bottom: 12px !important;
+}
+.card h3 {
+    margin: 10px 0 5px;
+    font-size: 18px;
+    color: #333;
+}
+
+/* 4. Description text (p) for ALL cards */
+.card p {
+    font-size: 15px !important;
+}
+.card p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Text ko space de taaki button hamesha neeche rahe */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Hover karne par thoda upar uthna */
+}
+/* Button Styling */
+.btn {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-purple { background-color: #6622cc; }
+.btn-blue { background-color: #1652f0; }
+.btn-black { background-color: #222; }
+.btn-pink { background-color: #ff007f; }
